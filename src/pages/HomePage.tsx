@@ -1,138 +1,60 @@
-// Home page of the app.
-// Currently a demo placeholder "please wait" screen.
-// Replace this file with your actual app UI. Do not delete it to use some other file as homepage. Simply replace the entire contents of this file.
-
-import { useEffect, useMemo, useState } from 'react'
-import { Sparkles } from 'lucide-react'
-
-import { ThemeToggle } from '@/components/ThemeToggle'
-import { HAS_TEMPLATE_DEMO, TemplateDemo } from '@/components/TemplateDemo'
-import { Button } from '@/components/ui/button'
-import { Toaster, toast } from '@/components/ui/sonner'
-
-function formatDuration(ms: number): string {
-  const total = Math.max(0, Math.floor(ms / 1000))
-  const m = Math.floor(total / 60)
-  const s = total % 60
-  return `${m}:${s.toString().padStart(2, '0')}`
-}
-
+import React from 'react';
+import { Navbar } from '@/components/layout/Navbar';
+import { NeoButton } from '@/components/ui/neobrutalist-button';
+import { useNavigate } from 'react-router-dom';
+import { Sparkles, Zap, Trophy, ShieldCheck } from 'lucide-react';
 export function HomePage() {
-  const [coins, setCoins] = useState(0)
-  const [isRunning, setIsRunning] = useState(false)
-  const [startedAt, setStartedAt] = useState<number | null>(null)
-  const [elapsedMs, setElapsedMs] = useState(0)
-
-  useEffect(() => {
-    if (!isRunning || startedAt === null) return
-
-    const t = setInterval(() => {
-      setElapsedMs(Date.now() - startedAt)
-    }, 250)
-
-    return () => clearInterval(t)
-  }, [isRunning, startedAt])
-
-  const formatted = useMemo(() => formatDuration(elapsedMs), [elapsedMs])
-
-  const onPleaseWait = () => {
-    setCoins((c) => c + 1)
-
-    if (!isRunning) {
-      // Resume from the current elapsed time
-      setStartedAt(Date.now() - elapsedMs)
-      setIsRunning(true)
-      toast.success('Building your app…', {
-        description: "Hang tight — we're setting everything up.",
-      })
-      return
-    }
-
-    setIsRunning(false)
-    toast.info('Still working…', {
-      description: 'You can come back in a moment.',
-    })
-  }
-
-  const onReset = () => {
-    setCoins(0)
-    setIsRunning(false)
-    setStartedAt(null)
-    setElapsedMs(0)
-    toast('Reset complete')
-  }
-
-  const onAddCoin = () => {
-    setCoins((c) => c + 1)
-    toast('Coin added')
-  }
-
+  const navigate = useNavigate();
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground p-4 overflow-hidden relative">
-      <ThemeToggle />
-      <div className="absolute inset-0 bg-gradient-rainbow opacity-10 dark:opacity-20 pointer-events-none" />
-
-      <div className="text-center space-y-8 relative z-10 animate-fade-in w-full">
-        <div className="flex justify-center">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center shadow-primary floating">
-            <Sparkles className="w-8 h-8 text-white rotating" />
+    <div className="min-h-screen bg-background">
+      <Navbar />
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+        <div className="text-center space-y-8 animate-in fade-in slide-in-from-bottom-8 duration-700">
+          <div className="inline-block bg-pop-yellow border-4 border-black rounded-full px-6 py-2 rotate-2 mb-4">
+            <span className="text-black font-black flex items-center gap-2">
+              <Sparkles className="w-5 h-5" /> 100% WEB3 REWARDS
+            </span>
           </div>
-        </div>
-
-        <div className="space-y-3">
-          <h1 className="text-5xl md:text-7xl font-display font-bold text-balance leading-tight">
-            Creating your <span className="text-gradient">app</span>
+          <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">
+            FLIP, MATCH, <br />
+            <span className="text-pop-pink underline decoration-black decoration-8 underline-offset-8">WIN BIG!</span>
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto text-pretty">
-            Your application would be ready soon.
+          <p className="max-w-2xl mx-auto text-xl md:text-2xl text-muted-foreground font-bold">
+            The world's first neobrutalist memory match adventure. Collect mascots, climb leaderboards, and mint your wins.
           </p>
-        </div>
-
-        {HAS_TEMPLATE_DEMO ? (
-          <div className="max-w-5xl mx-auto text-left">
-            <TemplateDemo />
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
+            <NeoButton variant="primary" size="lg" onClick={() => navigate('/play')} className="w-full sm:w-auto">
+              PLAY NOW!
+            </NeoButton>
+            <NeoButton variant="outline" size="lg" className="w-full sm:w-auto">
+              HOW TO PLAY
+            </NeoButton>
           </div>
-        ) : (
-          <>
-            <div className="flex justify-center gap-4">
-              <Button
-                size="lg"
-                onClick={onPleaseWait}
-                className="btn-gradient px-8 py-4 text-lg font-semibold hover:-translate-y-0.5 transition-all duration-200"
-                aria-live="polite"
-              >
-                Please Wait
-              </Button>
-            </div>
-
-            <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
-              <div>
-                Time elapsed:{' '}
-                <span className="font-medium tabular-nums text-foreground">{formatted}</span>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-20">
+            <div className="neo-container rotate-1 hover:rotate-0 transition-transform">
+              <div className="bg-pop-pink border-4 border-black w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <Zap className="text-white" />
               </div>
-              <div>
-                Coins:{' '}
-                <span className="font-medium tabular-nums text-foreground">{coins}</span>
+              <h3 className="text-xl font-black mb-2">QUICK GAMEPLAY</h3>
+              <p className="text-muted-foreground">Fast sessions designed for pro gamers and crypto enthusiasts alike.</p>
+            </div>
+            <div className="neo-container -rotate-1 hover:rotate-0 transition-transform">
+              <div className="bg-pop-yellow border-4 border-black w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <Trophy className="text-black" />
               </div>
+              <h3 className="text-xl font-black mb-2">DAILY PRIZES</h3>
+              <p className="text-muted-foreground">Top matchers get exclusive NFT drops and Jiggy Tokens (mock).</p>
             </div>
-
-            <div className="flex justify-center gap-2">
-              <Button variant="outline" size="sm" onClick={onReset}>
-                Reset
-              </Button>
-              <Button variant="outline" size="sm" onClick={onAddCoin}>
-                Add Coin
-              </Button>
+            <div className="neo-container rotate-1 hover:rotate-0 transition-transform">
+              <div className="bg-pop-blue border-4 border-black w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                <ShieldCheck className="text-white" />
+              </div>
+              <h3 className="text-xl font-black mb-2">SECURE LOGINS</h3>
+              <p className="text-muted-foreground">Integrated with your favorite wallets and social platforms.</p>
             </div>
-          </>
-        )}
-      </div>
-
-      <footer className="absolute bottom-8 text-center text-muted-foreground/80">
-        <p>Powered by Cloudflare</p>
-      </footer>
-
-      <Toaster richColors closeButton />
+          </div>
+        </div>
+      </main>
     </div>
-  )
+  );
 }
