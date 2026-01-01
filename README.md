@@ -1,6 +1,6 @@
 # JiggyChain Puzzle
 
-[cloudflarebutton]
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/Ari-Enzo/jiggychain-web3-puzzle-adventure)
 
 A full-stack web application built with React, TypeScript, Tailwind CSS, and Cloudflare Workers. This project combines a modern React frontend with a Hono-powered API backend, deployed seamlessly on Cloudflare's edge network. Designed for high performance, scalability, and developer experience.
 
@@ -126,7 +126,7 @@ This uses **Wrangler** under the hood. Ensure `wrangler.jsonc` is configured wit
 - Set custom domains in Cloudflare dashboard.
 - Observability is enabled by default (metrics, logs).
 
-[cloudflarebutton]
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/Ari-Enzo/jiggychain-web3-puzzle-adventure)
 
 ## Project Structure
 
